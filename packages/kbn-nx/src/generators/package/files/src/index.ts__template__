@@ -1,1 +1,1 @@
-export const variable-<%= constantName %> = "<%= projectName %>";
+export const variable_<%= constantName %> = "<%= projectName %>";
