@@ -1,12 +1,14 @@
 const { createProjectGraphAsync } = require('@nrwl/workspace/src/core/project-graph');
 const { workspaceRoot } = require('nx/src/utils/workspace-root');
-const fs = require('fs');
-
+const { FsTree, flushChanges } = require('nx/src/generators/tree');
+const { printChanges } = require('nx/src/command-line/generate');
+const { names, updateJson, formatFiles} = require('@nrwl/devkit');
 
 (async () => {
   const projGraph = await createProjectGraphAsync()
   const nodeNames = Object.keys(projGraph.nodes);
   const paths = {};
+  const dryRun = process.argv[2] ? names(process.argv[2].replace(/--/, '')).propertyName : null;
   nodeNames.forEach((name) => {
     if(!projGraph.nodes[name].data.targets.typecheck) {
       return;
@@ -16,11 +18,28 @@ const fs = require('fs');
     paths[`${pkgName}/*`] = [`${projGraph.nodes[name].data.root}/src/*`];
   });
 
-  // paths
-  const baseTS = JSON.parse(fs.readFileSync(`${workspaceRoot}/tsconfig.base.json`, 'utf8'));
-  baseTS.compilerOptions.paths = paths;
+  // update paths
+  const host = new FsTree(workspaceRoot, false);
 
-  fs.writeFileSync(`${workspaceRoot}/tsconfig.base.json`, JSON.stringify(baseTS, null, 2));
+  if (host.exists('tsconfig.base.json')) {
+    updateJson(host, 'tsconfig.base.json', (tsconfig) => {
+      if (tsconfig.compilerOptions.paths) {
+        tsconfig.compilerOptions.paths = paths;
+      }
+      return tsconfig
+    })
+  }
+
+  await formatFiles(host);
+
+  const changes = host.listChanges()
+  printChanges(changes);
+
+  if (dryRun === 'dryRun') {
+    console.warn(`\nNOTE: The "dryRun" flag means no changes were made.`);
+  } else {
+    flushChanges(workspaceRoot, changes);
+  }
 
   process.exit(0);
 })();
