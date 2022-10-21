@@ -30,6 +30,7 @@ function normalizeOptions(
     return {
       ...options,
       name,
+      constantName: names(name).constantName,
       projectName,
       projectRoot: projectDirectory,
       projectDirectory,
