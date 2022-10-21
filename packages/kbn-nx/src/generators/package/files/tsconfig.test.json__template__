@@ -9,5 +9,6 @@
     "**/*.mocks.*",
     "**/*.d.ts",
     "jest.config.ts"
-  ]
+  ],
+  "exclude": ["dist/**/*"]
 }
