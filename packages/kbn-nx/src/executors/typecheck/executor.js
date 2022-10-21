@@ -28,7 +28,8 @@ module.exports = async function typecheckExecutor(
         `${libRoot}/tsconfig.build.json`,
         '--declaration',
         '--emitDeclarationOnly',
-        '--paths="{}"',
+        '--paths',
+        'null'
 
     ])
     // tsc.stdout?.pipe(process.stdout)

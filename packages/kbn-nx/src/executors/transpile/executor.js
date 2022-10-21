@@ -25,7 +25,13 @@ module.exports = async function transpileExecutor(
     const tsc = execa(packageManagerCmd, [
         'tsc',
         '--project',
-        `${libRoot}/tsconfig.build.json`
+        `${libRoot}/tsconfig.build.json`,
+        '--declaration',
+        'false',
+        '--declarationDir',
+        'null',
+        '--sourceMap',
+        'false'
 
     ])
     // tsc.stdout?.pipe(process.stdout)

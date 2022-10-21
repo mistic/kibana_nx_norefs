@@ -2,6 +2,8 @@
   "extends": "<%= offsetFromRoot %>tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist/code",
+    "rootDir": "./src",
+    "declaration": true,
     "declarationDir": "./dist/types",
     "types": ["node", "jest"]
   },
