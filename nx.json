@@ -25,9 +25,8 @@
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": ["default"],
-    "sharedGlobals": []
+    "default": ["{projectRoot}/**/*"],
+    "production": ["default"]
   },
   "workspaceLayout": {
     "appsDir": "packages",
