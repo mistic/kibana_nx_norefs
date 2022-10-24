@@ -29,7 +29,9 @@ module.exports = async function typecheckExecutor(
         '--declaration',
         '--emitDeclarationOnly',
         '--paths',
-        'null'
+        'null',
+        '--rootDir',
+        `${libRoot}/src`
 
     ])
     // tsc.stdout?.pipe(process.stdout)

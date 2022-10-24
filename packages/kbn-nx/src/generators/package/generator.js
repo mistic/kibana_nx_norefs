@@ -98,6 +98,7 @@ module.exports =  async function (host, options) {
     updateJson(host, 'tsconfig.base.json', (tsconfig) => {
       if (tsconfig.compilerOptions.paths) {
         tsconfig.compilerOptions.paths[`${normalizedOptions.packageName}/*`] = [`${normalizedOptions.projectRoot}/src/*`];
+        tsconfig.compilerOptions.paths[`${normalizedOptions.packageName}`] = [`${normalizedOptions.projectRoot}/src/index.ts`];
       }
       return tsconfig
     })

@@ -16,6 +16,7 @@ const { names, updateJson, formatFiles} = require('@nrwl/devkit');
 
     const pkgName = `@kbn/${projGraph.nodes[name].name.replace(/^kbn-/gi, '').replace(/-/gi, '/')}`;
     paths[`${pkgName}/*`] = [`${projGraph.nodes[name].data.root}/src/*`];
+    paths[`${pkgName}`] = [`${projGraph.nodes[name].data.root}/src/index.ts`];
   });
 
   // update paths
